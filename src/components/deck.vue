@@ -1,13 +1,13 @@
 <template>
-  <div class="container col-6">
+  <div class="container col-8">
     <header class="row my-5">
       <h1>MemoFruits</h1>
 
-      <input type="text" v-model="newCard" />
+      <!-- <input type="text" v-model="newCard" />
       <p>{{ newCard }}</p>
-      <button @click="addCards">Ajouter</button>
+      <button @click="addCards">Ajouter</button> -->
 
-      <p>new card :{{ newCardsData }}</p>
+      <!-- <p>new card :{{ newCardsData }}</p> -->
       <h2 class="col-12">
         score : {{ score }} <br />
         {{ textAlert }}
@@ -18,7 +18,7 @@
         id="board"
         v-for="(card, index) in deck"
         :key="index"
-        class="col-3 mx-auto"
+        class="col-2 mx-auto"
       >
         <button
           :class="card.show ? 'show' : ''"
@@ -29,7 +29,7 @@
       </div>
     </div>
   </div>
-  <button @click="shuffle">Mélanger</button>
+  <!-- <button @click="shuffle">Mélanger</button> -->
 </template>
 
 <script>
@@ -46,13 +46,16 @@ export default {
         { cardData: "🥝", show: false },
         { cardData: "🍎", show: false },
         { cardData: "🍎", show: false },
+        { cardData: "🍑", show: false },
+        { cardData: "🍑", show: false },
+        { cardData: "🍉", show: false },
+        { cardData: "🍉", show: false },
       ],
       currentCardData: null,
       firstId: null,
       newCard: "",
       newCardId: 7,
       score: 0,
-      maxScore: 3,
       textAlert: "",
     };
   },
@@ -74,7 +77,7 @@ export default {
         this.textAlert = "GOOD !";
 
         this.currentCardData = null;
-        if (this.score === this.maxScore) {
+        if (this.score === this.deck.length / 2) {
           setTimeout(() => {
             alert("You won !");
           }, 300);
@@ -93,13 +96,26 @@ export default {
       console.log(this.deck);
     },
   },
+  mounted() {
+    this.shuffle();
+
+    this.deck.forEach((card, index) => {
+      card.show = true;
+      console.log("show all cards");
+    });
+    setTimeout(() => {
+      this.deck.forEach((card, index) => {
+        card.show = false;
+      });
+    }, 1000);
+  },
 };
 </script>
 
 <style scoped>
 #board button {
   overflow: hidden;
-  min-width: 200px;
+  min-width: 150px;
   aspect-ratio: 1/1;
   background-color: rgb(195, 215, 255);
   border-radius: 15px;
